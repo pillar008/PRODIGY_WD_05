@@ -1,8 +1,9 @@
-const apiKey = "564d347a7d0381e02fb4349b31b8ea4e";
+const apiKey = "c28299d283bd1b8dee1809d7611c4e22";
 
 function searchWeather() {
   const cityInput = document.getElementById("cityInput").value;
   const weatherContainer = document.getElementById("weatherContainer");
+  const graphContainer = document.getElementById("graphContainer");
 
   // Fetch weather data from OpenWeatherMap API
   fetch(
@@ -21,6 +22,7 @@ function searchWeather() {
 
       // Update the chart with weather data
       updateWeatherDataChart(
+        graphContainer,
         data.main.temp,
         data.main.humidity,
         data.wind.speed,
@@ -32,6 +34,7 @@ function searchWeather() {
 
 function getCurrentLocationWeather() {
   const weatherContainer = document.getElementById("weatherContainer");
+  const graphContainer = document.getElementById("graphContainer");
 
   if ("geolocation" in navigator) {
     navigator.geolocation.getCurrentPosition((position) => {
@@ -55,6 +58,7 @@ function getCurrentLocationWeather() {
 
           // Update the chart with weather data
           updateWeatherDataChart(
+            graphContainer,
             data.main.temp,
             data.main.humidity,
             data.wind.speed,
@@ -68,64 +72,69 @@ function getCurrentLocationWeather() {
   }
 }
 
-function updateWeatherDataChart(temperature, humidity, windSpeed, pressure) {
-  // Get canvas element for the weather data chart
-  const weatherDataChartCanvas = document.getElementById("weatherDataChart");
-
-  // Create or update the weather data chart
-  createOrUpdateWeatherDataChart(
-    weatherDataChartCanvas,
-    temperature,
-    humidity,
-    windSpeed,
-    pressure
-  );
-}
-
-function createOrUpdateWeatherDataChart(
-  canvas,
+function updateWeatherDataChart(
+  graphContainer,
   temperature,
   humidity,
   windSpeed,
   pressure
 ) {
-  if (!canvas.chart) {
-    // Create a new horizontal bar chart if it doesn't exist
-    const ctx = canvas.getContext("2d");
-    canvas.chart = new Chart(ctx, {
-      type: "horizontalBar",
-      data: {
-        labels: ["Temperature", "Humidity", "Wind Speed", "Pressure"],
-        datasets: [
-          {
-            label: "Weather Data",
-            data: [temperature, humidity, windSpeed, pressure],
-            backgroundColor: [
-              "rgba(255, 99, 132, 0.7)",
-              "rgba(75, 192, 192, 0.7)",
-              "rgba(54, 162, 235, 0.7)",
-              "rgba(255, 205, 86, 0.7)",
-            ],
-            borderWidth: 1,
-          },
-        ],
-      },
-      options: {
-        scales: {
-          x: {
-            beginAtZero: true,
-          },
+  // Clear existing content in the graphContainer
+  graphContainer.innerHTML = "";
+
+  // Create canvas element for the chart
+  const canvas = document.createElement("canvas");
+  canvas.id = "weatherDataChart";
+  canvas.width = 400;
+  canvas.height = 200;
+  graphContainer.appendChild(canvas);
+
+  // Draw the chart using the provided weather data
+  const ctx = canvas.getContext("2d");
+  const dataCount = 4;
+  const numberCfg = { count: dataCount, min: -100, max: 100 };
+  const labels = ["Temperature", "Humidity", "Wind Speed", "Pressure"];
+
+  const datasets = [
+    {
+      label: "Weather Data",
+      data: [temperature, humidity, windSpeed, pressure],
+      borderColor: "rgba(75, 192, 192, 1)",
+      backgroundColor: "rgba(75, 192, 192, 0.2)",
+      borderWidth: 2,
+      pointRadius: 5,
+      pointBackgroundColor: "rgba(75, 192, 192, 1)",
+    },
+  ];
+
+  const chartData = {
+    labels: labels,
+    datasets: datasets,
+  };
+
+  new Chart(ctx, {
+    type: "line",
+    data: chartData,
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          position: "top",
         },
       },
-    });
-  } else {
-    // Update the existing chart with new data
-    canvas.chart.data.datasets[0].data = [
-      temperature,
-      humidity,
-      windSpeed,
-      pressure,
-    ];
-    canvas.chart.update();
-  }
+      interaction: {
+        intersect: false,
+        mode: "index",
+      },
+      scales: {
+        x: {
+          beginAtZero: true,
+        },
+        y: {
+          beginAtZero: true,
+        },
+      },
+    },
+  });
 }

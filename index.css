@@ -11,14 +11,14 @@ body {
 
 .container {
   background-color: rgba(
-    41,
-    128,
-    185,
+    54,
+    73,
+    123,
     0.9
   ); /* Semi-transparent dark blue container */
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 20px rgba(241, 239, 239, 0.3);
   text-align: center;
   transition: box-shadow 0.3s ease; /* Smooth transition for box shadow */
 }
