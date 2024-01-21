@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="index.css" />
+    <title>Weather App</title>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Weather App 🌦️</h1>
+      <div class="search-container">
+        <input type="text" id="cityInput" placeholder="Enter city" />
+        <button onclick="searchWeather()">Search</button>
+        <button onclick="getCurrentLocationWeather()">
+          Use Current Location
+        </button>
+      </div>
+      <div class="weather-container" id="weatherContainer">
+        <!-- Weather data will be displayed here -->
+      </div>
+      <div class="graph-container" id="graphContainer">
+        <canvas id="weatherDataChart" width="400" height="200"></canvas>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="index.js"></script>
+  </body>
+</html>
