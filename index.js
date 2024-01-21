@@ -1,5 +1,5 @@
 const apiKey = "api_key";//removed API key for security reasons 
-
+ 
 function searchWeather() {
   const cityInput = document.getElementById("cityInput").value;
   const weatherContainer = document.getElementById("weatherContainer");
