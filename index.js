@@ -118,21 +118,14 @@ function updateWeatherDataChart(
     options: {
       responsive: true,
       maintainAspectRatio: false,
-      plugins: {
-        legend: {
-          position: "top",
-        },
-      },
-      interaction: {
-        intersect: false,
-        mode: "index",
-      },
       scales: {
         x: {
           beginAtZero: true,
+          color: "#333", // Change this to your desired text color
         },
         y: {
           beginAtZero: true,
+          color: "#333", // Change this to your desired text color
         },
       },
     },

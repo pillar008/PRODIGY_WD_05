@@ -64,6 +64,7 @@ button:hover {
 }
 
 .weather-container {
+  color: white;
   margin-top: 20px;
   transition: opacity 0.3s ease; /* Smooth transition for opacity */
 }
@@ -73,5 +74,6 @@ button:hover {
 }
 
 .graph-container {
+  color: white;
   margin-top: 20px;
 }
